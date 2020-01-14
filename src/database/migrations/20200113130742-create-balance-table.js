@@ -7,6 +7,13 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      company_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'companies', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: false,
+      },
       competencia: {
         type: Sequelize.STRING(7),
         allowNull: false,
@@ -17,13 +24,6 @@ module.exports = {
       },
       desp_folha: {
         type: Sequelize.FLOAT,
-        allowNull: false,
-      },
-      company_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'companies', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
         allowNull: false,
       },
       created_at: {

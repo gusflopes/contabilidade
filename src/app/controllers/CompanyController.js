@@ -4,8 +4,10 @@ import User from '../models/User';
 
 class CompanyController {
   async index(req, res) {
+    const { userId } = req;
+
     try {
-      const companies = await Company.findAll();
+      const companies = await Company.findAll({ where: { owner_id: userId } });
       return res.status(200).json(companies);
     } catch (err) {
       console.log(err);
@@ -14,7 +16,13 @@ class CompanyController {
   }
 
   async show(req, res) {
-    return res.status(200).json({ message: 'OK' });
+    const { userId, companyId, company } = req.authorized;
+    // console.log(req.authorized);
+
+    // const response = await permissionMiddleware(userId, companyId, res);
+    console.log(userId, companyId);
+
+    return res.status(200).json(company);
   }
 
   async store(req, res) {
@@ -22,18 +30,21 @@ class CompanyController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       cnpj: Yup.string(),
+      client_code: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação. ' });
     }
 
-    const { name, cnpj } = req.body;
+    const { userId } = req;
+    const { name, cnpj, client_code } = req.body;
 
     // verifica se ja existe?
     const companyExists = await Company.findOne({
       where: {
         name,
+        owner_id: userId,
       },
     });
     if (companyExists) {
@@ -52,7 +63,8 @@ class CompanyController {
     const companySave = await Company.create({
       name,
       cnpj,
-      user_id: req.userId,
+      client_code,
+      owner_id: req.userId,
     });
     console.log(companySave);
 
@@ -63,11 +75,15 @@ class CompanyController {
   }
 
   async update(req, res) {
+    const { userId, companyId, company } = req.authorized;
     return res.status(200).json({ message: 'OK' });
   }
 
   async delete(req, res) {
-    return res.status(200).json({ message: 'OK' });
+    const { userId, companyId, company } = req.authorized;
+    await Company.destroy({ where: { id: companyId } });
+
+    return res.status(200).json({ message: 'Registro deletado.' });
   }
 }
 

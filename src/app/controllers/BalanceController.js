@@ -10,7 +10,7 @@ class FatorRController {
     console.log(`User: ${userId} e Company: ${companyId}`);
 
     // Verificar se a Company pertence ao usuário
-    const balances = await Balance.findAll();
+    const balances = await Balance.findAll({ where: { companyId } });
 
     return res.status(200).json(balances);
   }
@@ -33,9 +33,12 @@ class FatorRController {
 
     const { competencia, receita, folha } = req.body;
     const { companyId } = req.params;
+    console.log(companyId);
 
     // Verificar se já existe cadastrada aquela competência
-    const balanceExists = await Balance.findOne({ where: { competencia } });
+    const balanceExists = await Balance.findOne({
+      where: { competencia, company_id: companyId },
+    });
     if (balanceExists) {
       console.log(balanceExists);
       return res.status(401).json({
@@ -48,7 +51,7 @@ class FatorRController {
       competencia,
       recBruta: receita,
       despFolha: folha,
-      companyId,
+      company_id: companyId,
     });
 
     // console.log(balance);

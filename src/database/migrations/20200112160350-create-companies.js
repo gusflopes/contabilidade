@@ -7,6 +7,14 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      owner_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -15,17 +23,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      client_code: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+
       cnpj: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
-      },
+
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

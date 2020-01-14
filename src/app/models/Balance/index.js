@@ -7,7 +7,7 @@ class Balance extends Model {
         competencia: Sequelize.STRING,
         recBruta: Sequelize.STRING,
         despFolha: Sequelize.STRING,
-        companyId: Sequelize.INTEGER,
+        companyId: Sequelize.STRING,
       },
       {
         sequelize,
