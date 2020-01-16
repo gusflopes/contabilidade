@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import Company from '../models/Company';
 import Balance from '../models/Balance';
 
-class FatorRController {
+class BalanceController {
   async index(req, res) {
     // usuario
     const { userId } = req;
@@ -46,6 +46,16 @@ class FatorRController {
       });
     }
 
+    // Verificar falha na sequência
+    // Buscar a ultima competência cadastrada
+    const lastBalance = await Balance.findOne({
+      order: [['competencia', 'DESC']],
+    });
+    console.log(lastBalance);
+    return res.json(lastBalance);
+    // Adicionar um mês na resposta
+    // Se resposta != competencia a cadastrar => erro!
+
     // Ver para substituir para método findOrCreate
     const balance = await Balance.create({
       competencia,
@@ -60,4 +70,4 @@ class FatorRController {
   }
 }
 
-export default new FatorRController();
+export default new BalanceController();
