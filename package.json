@@ -21,6 +21,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
     "sequelize-slugify": "^0.9.1",
+    "xml-js": "^1.6.11",
     "youch": "^2.0.10",
     "yup": "^0.28.0"
   },
