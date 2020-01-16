@@ -4,6 +4,7 @@ import UserController from './app/controllers/UserController';
 import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
 import BalanceController from './app/controllers/BalanceController';
+import FatorRController from './app/controllers/FatorRController';
 
 import authMiddleware from './app/middlewares/auth';
 import permissionMiddleware from './app/middlewares/permission';
@@ -52,5 +53,8 @@ routes.post(
   permissionMiddleware,
   BalanceController.store
 );
+
+routes.get('/:companyId/fatorR', permissionMiddleware, FatorRController.index);
+routes.get('/:companyId/fatorR2', permissionMiddleware, FatorRController.store);
 
 export default routes;

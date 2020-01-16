@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import Company from '../models/Company';
 import Balance from '../models/Balance';
 
+import { addMonth } from '../utils/MonthUtils';
+
 class BalanceController {
   async index(req, res) {
     // usuario
@@ -30,7 +32,6 @@ class BalanceController {
     }
 
     // Validacao da competencia (apenas 01 a 12)
-
     const { competencia, receita, folha } = req.body;
     const { companyId } = req.params;
     console.log(companyId);
@@ -47,24 +48,28 @@ class BalanceController {
     }
 
     // Verificar falha na sequência
-    // Buscar a ultima competência cadastrada
     const lastBalance = await Balance.findOne({
+      where: { company_id: companyId },
       order: [['competencia', 'DESC']],
     });
-    console.log(lastBalance);
-    return res.json(lastBalance);
-    // Adicionar um mês na resposta
-    // Se resposta != competencia a cadastrar => erro!
 
-    // Ver para substituir para método findOrCreate
+    if (lastBalance) {
+      if (addMonth(lastBalance.competencia) !== competencia) {
+        return res.status(401).json({
+          error: `Última competência cadastrada foi ${
+            lastBalance.competencia
+          }. Favor cadastrar a competência ${addMonth(
+            lastBalance.competencia
+          )} antes de prosseguir.`,
+        });
+      }
+    }
     const balance = await Balance.create({
       competencia,
       recBruta: receita,
       despFolha: folha,
       company_id: companyId,
     });
-
-    // console.log(balance);
 
     return res.status(201).json(balance);
   }
