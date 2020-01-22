@@ -3,7 +3,8 @@ const fs = require('fs');
 const format = require('date-fns/format');
 const utils = require('./utils');
 
-async function writeFile(file, data) {
+async function writeFile(data) {
+  const file = await utils.generateFileName();
   fs.appendFile(file, data, err => {
     if (err) throw err;
     console.log('The data was appended to file!');
@@ -18,8 +19,8 @@ async function createOutput(data, cnpj, user) {
     const { date, debit, credit, value, description } = n;
     const formattedDate = format(date, 'dd/MM/yyyy');
 
-    output += `|6000|X||||`;
-    output += `|6100|${formattedDate}|${debit}|${credit}|${value}||${description}|${user}||`;
+    output += `|6000|X||||\n`;
+    output += `|6100|${formattedDate}|${debit}|${credit}|${value}||${description}|${user}||\n`;
   });
 
   return output;
@@ -43,7 +44,16 @@ async function importFile(filePath) {
   return Object.values(importedExcel)[0];
 }
 
-const file = utils.generateFileName();
-const filePath = 'template.xlxs';
+async function xlsxToDominio(filePath, cnpj, user) {
+  const data = await importFile(filePath);
+
+  const input = await createOutput(data, cnpj, user);
+
+  await writeFile(input);
+}
+
+const filePath = './template.xlsx';
 const cnpj = '26649391000163';
 const user = 'ADMIN';
+
+xlsxToDominio(filePath, cnpj, user);
