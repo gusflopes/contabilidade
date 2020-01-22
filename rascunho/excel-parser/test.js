@@ -21,6 +21,53 @@ const source = `Data	Debito	Credito	Valor	Historico
 19/01/19	1	2	R$ 153,00	Pagamento de fornecedor conf. comprovante.
 20/01/19	3	1	R$ 154,00	Pagamento de fornecedor conf. comprovante.`;
 
+const lines = source.split(/\n/);
+const titulos = lines[0];
+
+const header = lines.splice(0, 1)[0].split(/\t/);
+
+const columns = [];
+
+for (i = 0; i < header.length; i++) {
+  columns.push('col' + (i + 1));
+}
+console.log(columns);
+console.log(columns.length);
+
+console.log(columns[0].valueOf());
+
+return;
+
+// console.log(header);
+// console.log(lines);
+const data = [];
+
+const columns = [ 'col1', 'col2', 'col3', 'col4', 'col5' ];
+
+lines.map(line => {
+  const input = line.split(/\t/);
+  data.push({
+    (columns[0].valueOf()): input[0],
+    (columns[1].valueOf()): input[1],
+    (columns[2].valueOf()): input[2],
+    (columns[3].valueOf()): input[3],
+  });
+});
+
+debit: input[1],
+credit: input[2],
+value: input[3],
+description: input[4],
+
+
+console.log('-----');
+console.log(data);
+
+return;
+
+/*
+return console.log(lines[0]);
+
 const data = source.split(/\t|\n/);
 console.log(data.length / 5);
 
