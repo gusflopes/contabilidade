@@ -1,5 +1,10 @@
 # Lançamentos Contábeis
 
+## Informações
+
+Gerar um arquivo de importação de lançamentos contábeis para o
+Domínio sistemas a partir de uma planilha de Excel !
+
 ## Estrutura do Excel
 
 Data | Categoria |
