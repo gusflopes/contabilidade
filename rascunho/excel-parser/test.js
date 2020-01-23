@@ -27,19 +27,23 @@ const titulos = lines[0];
 const header = lines.splice(0, 1)[0].split(/\t/);
 
 const columns = [];
+const data = [];
 
 for (i = 0; i < header.length; i++) {
-  columns.push("col" + (i + 1));
+  columns.push(`col${i + 1}`);
 }
 console.log(columns);
 
-let result = [];
+const result = {};
 lines.map(line => {
   const input = line.split(/\t/);
 
   input.map((value, index) => {
     result[columns[index]] = value;
+    data.push(result);
   });
 });
 
-console.log("result", result);
+console.log('result', result);
+console.log('---');
+console.log(data);
