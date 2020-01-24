@@ -89,7 +89,7 @@ module.exports = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: '@shelf/jest-mongodb',
+  // preset: '@shelf/jest-mongodb',
 
   // Run tests from one or more projects
   // projects: undefined,
