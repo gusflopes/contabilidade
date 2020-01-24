@@ -1,24 +1,13 @@
-/* Adicionar Meses
-Expected values
-2018/11 + 1 = 2018/12
-2018/12 + 1 = 2019/01
-*/
-const formatMonth = require('./utils');
-// function formatMonth(n) {
-//   return n > 9 ? "" + n: "0" + n
-// }
+const addMonth = require('./addMonth');
 
-function addMonth(input) {
-  const parts = input.split('/');
-  const anoAtual = parseInt(parts[0]);
-  const mesAtual = parseInt(parts[1]);
+test('add Month 2018/11 + 1', () => {
+  expect(addMonth('2018/11')).toBe('2018/12');
+});
 
-  if (mesAtual === 12) {
-    return `${anoAtual + 1}/01`
-  }
-    return `${parts[0]}/${formatMonth(mesAtual + 1)}`
-}
+test('add Month 2018/12 + 1', () => {
+  expect(addMonth('2018/12')).toBe('2019/01');
+});
 
-console.log(addMonth('2018/11'));
-console.log(addMonth('2018/12'));
-console.log(addMonth('2019/01'));
+test('add Month 2018/09 + 1', () => {
+  expect(addMonth('2018/09')).toBe('2018/10');
+});
