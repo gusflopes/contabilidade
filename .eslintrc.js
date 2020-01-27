@@ -67,7 +67,16 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.js'],
     },
     'import/resolver': {
-      typescript: {},
+      webpack: {
+        config: {
+          resolve: {
+            alias: {
+              '~': path.join(__dirname, 'src/app'),
+            },
+            extensions: ['.js', '.ts'],
+          },
+        },
+      },
     },
   },
 };

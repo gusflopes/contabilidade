@@ -1,15 +1,14 @@
 import { Router } from 'express';
 
-import UserController from './app/controllers/UserController';
-import CompanyController from './app/controllers/CompanyController';
-import SessionController from './app/controllers/SessionController';
 import BalanceController from './app/controllers/BalanceController';
+import CompanyController from './app/controllers/CompanyController';
 import FatorRController from './app/controllers/FatorRController';
-
+import SessionController from './app/controllers/SessionController';
+import UserController from './app/controllers/UserController';
 import authMiddleware from './app/middlewares/auth';
 import permissionMiddleware from './app/middlewares/permission';
 
-const routes = new Router();
+const routes = Router();
 
 // Public Routes
 routes.get('/', (req, res) => res.json({ message: 'Hello World' }));
