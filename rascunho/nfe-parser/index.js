@@ -3,7 +3,7 @@ const convert = require('xml-js');
 const fs = require('fs');
 
 module.exports = {
-  nfeParser: async () => {
+  nfeParser: async xmlFile => {
     const xmlfile = fs.readFileSync(
       './rascunho/assets/nfe-example.xml',
       'utf8'
@@ -13,11 +13,12 @@ module.exports = {
     const { nfeProc } = await convert.xml2js(xmlfile, options);
 
     const { NFe } = nfeProc;
-    console.log(NFe);
+    const { ide, emit, dest, det, total, tranp } = NFe;
+    console.log(ide);
 
     return NFe;
   },
   hello: () => {
-    console.log('Hello World');
+    return 'Hello World';
   },
 };
