@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 import User from '../app/models/User';
 import Company from '../app/models/Company';

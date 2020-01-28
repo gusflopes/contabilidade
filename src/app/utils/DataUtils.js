@@ -13,8 +13,8 @@ const formatMonth = n => {
 
 const addMonth = input => {
   const parts = input.split('/');
-  const anoAtual = parseInt(parts[0]);
-  const mesAtual = parseInt(parts[1]);
+  const anoAtual = parseInt(parts[0], 10);
+  const mesAtual = parseInt(parts[1], 10);
 
   if (mesAtual === 12) {
     return `${anoAtual + 1}/01`;

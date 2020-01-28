@@ -1,25 +1,29 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
+import { sequelize } from './config/database';
 
 import routes from './routes';
-import './database';
+// import './database';
 
 class App {
-  public express: express.Application
+  public express: express.Application;
 
-  public constructor () {
+  public constructor() {
     this.express = express();
+    async () => {
+      await sequelize.sync({ force: true });
+    };
   }
 
-  private middlewares (): void {
+  private middlewares(): void {
     this.express.use(express.json());
     this.express.use(cors());
- }
+  }
 
- private routes (): void {
-   this.express.use(routes);
- }
+  private routes(): void {
+    this.express.use(routes);
+  }
 }
 
 export default new App().express;
