@@ -17,7 +17,7 @@ module.exports = {
     );
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.bulkDelete('users', { name: 'Gustavo Lopes' }, {});
   },
 };

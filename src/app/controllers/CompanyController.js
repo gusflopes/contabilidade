@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import Company from '../models/Company';
 import User from '../models/User';
 
+import validateCompany from '../validators/validateCompany';
+
 class CompanyController {
   async index(req, res) {
     const { userId } = req;
@@ -17,28 +19,13 @@ class CompanyController {
 
   async show(req, res) {
     const { userId, companyId, company } = req.authorized;
-    // console.log(req.authorized);
-
-    // const response = await permissionMiddleware(userId, companyId, res);
-    console.log(userId, companyId);
 
     return res.status(200).json(company);
   }
 
   async store(req, res) {
-    // validacao
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      cnpj: Yup.string(),
-      client_code: Yup.number(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação. ' });
-    }
-
     const { userId } = req;
-    const { name, cnpj, client_code } = req.body;
+    const { name, cnpj, start_date, client_code } = req.body;
 
     // verifica se ja existe?
     const companyExists = await Company.findOne({
@@ -54,6 +41,7 @@ class CompanyController {
           id: companyExists.id,
           name: companyExists.name,
           cnpj: companyExists.cnpj,
+          start_date: companyExists.start_date,
           slug: companyExists.slug,
         },
       });
@@ -63,10 +51,10 @@ class CompanyController {
     const companySave = await Company.create({
       name,
       cnpj,
+      start_date,
       client_code,
       owner_id: req.userId,
     });
-    console.log(companySave);
 
     // Buscar dados
     const company = await Company.findByPk(companySave.id);
@@ -74,9 +62,10 @@ class CompanyController {
     return res.status(201).json(company);
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     const { userId, companyId, company } = req.authorized;
-    return res.status(200).json({ message: 'OK' });
+
+    return res.status(200).json({ validated });
   }
 
   async delete(req, res) {

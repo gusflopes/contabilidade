@@ -1,13 +1,15 @@
 import { Router } from 'express';
 
+import authMiddleware from './app/middlewares/auth';
+import permissionMiddleware from './app/middlewares/permission';
+
 import UserController from './app/controllers/UserController';
 import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
 import BalanceController from './app/controllers/BalanceController';
 import FatorRController from './app/controllers/FatorRController';
 
-import authMiddleware from './app/middlewares/auth';
-import permissionMiddleware from './app/middlewares/permission';
+import validateCompany from './app/validators/validateCompany';
 
 const routes = new Router();
 
@@ -24,19 +26,18 @@ routes.get('/users', UserController.index);
 routes.put('/users', UserController.update);
 
 routes.get('/companies', CompanyController.index);
-routes.post('/companies', CompanyController.store);
-
-// Permission to acess Company Information
-// routes.use(permissionMiddleware);
-// não funcionou como middleware assim pq não tive acesso à req.params
-
+routes.post('/companies', validateCompany, CompanyController.store);
 routes.get(
   '/companies/:companyId',
   permissionMiddleware,
   CompanyController.show
 );
-
-routes.put('/companies/:companyId', CompanyController.update);
+routes.put(
+  '/companies/:companyId',
+  permissionMiddleware,
+  validateCompany,
+  CompanyController.update
+);
 routes.delete(
   '/companies/:companyId',
   permissionMiddleware,
