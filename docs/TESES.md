@@ -12,3 +12,8 @@ Calcular a alíquota efetiva para a competência subsequente
 ### Simples Nacional X Lucro Presumido
 
 ### Lucro Presumido X Lucro Real
+
+### Simples Nacional
+- Fator R
+- Aliquota Efetiva
+- Inicio das Atividades

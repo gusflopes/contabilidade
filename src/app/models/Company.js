@@ -18,6 +18,7 @@ class Company extends Model {
         // razao_social: Sequelize.STRING,
         // fantasia: Sequelize.STRING,
         cnpj: Sequelize.STRING,
+        start_date: Sequelize.DATE,
         // natureza_juridica: Sequelize.STRING,
         // porte: Sequelize.STRING,
         // insc_estadual: Sequelize.STRING,
