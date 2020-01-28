@@ -13,7 +13,7 @@ class UserController {
     }
   }
 
-  async store(req, res) {
+  public async store(req: Request, res: Response): Promise<Response> {
     const schema = Yup.object().shape({
       email: Yup.string()
         .email()
@@ -41,14 +41,14 @@ class UserController {
     });
   }
 
-  async update(req, res) {
+  public async update(req: Request, res: Response): Promise<Response> {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
       oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
-        .when('oldPassword', (oldPassword, field) =>
+        .when('oldPassword', (oldPassword: string, field) =>
           oldPassword ? field.required() : field
         ),
       confirmPassword: Yup.string().when('password', (password, field) =>
