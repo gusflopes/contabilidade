@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 import BalanceController from './app/controllers/BalanceController';
 import CompanyController from './app/controllers/CompanyController';
@@ -11,7 +11,7 @@ import permissionMiddleware from './app/middlewares/permission';
 const routes = Router();
 
 // Public Routes
-routes.get('/', (req, res) => res.json({ message: 'Hello World' }));
+routes.get('/', (req: Request, res: Response) => res.json({ message: 'Hello World' }));
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 

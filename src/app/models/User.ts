@@ -1,6 +1,13 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
+interface UserInterface extends Model {
+  name?: string,
+  email?: string,
+  password?: string,
+  password_hash?: string,
+}
+
 class User extends Model {
   static init(sequelize) {
     super.init(

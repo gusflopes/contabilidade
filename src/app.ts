@@ -5,10 +5,21 @@ import express from 'express';
 import routes from './routes';
 import './database';
 
-const app = express();
+class App {
+  public express: express.Application
 
-app.use(cors());
-app.use(express.json());
-app.use(routes);
+  public constructor () {
+    this.express = express();
+  }
 
-export default app;
+  private middlewares (): void {
+    this.express.use(express.json());
+    this.express.use(cors());
+ }
+
+ private routes (): void {
+   this.express.use(routes);
+ }
+}
+
+export default new App().express;
