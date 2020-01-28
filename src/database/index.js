@@ -1,3 +1,4 @@
+/*
 import { Sequelize } from 'sequelize-typescript';
 
 import User from '../app/models/User';
@@ -23,3 +24,5 @@ class Database {
 }
 
 export default new Database();
+
+*/

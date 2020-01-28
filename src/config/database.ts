@@ -1,5 +1,6 @@
 require('dotenv/config');
 import { Sequelize } from 'sequelize-typescript';
+import { User } from '../app/models/User';
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
@@ -8,7 +9,7 @@ export const sequelize = new Sequelize({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   logging: console.log,
-  models: [__dirname + '/models'], // ou ../models
+  models: [User], // ou ../models
   /*
   define: {
     timestamps: true,

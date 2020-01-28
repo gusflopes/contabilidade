@@ -10,13 +10,12 @@ import {
 } from 'sequelize-typescript';
 import bcrypt from 'bcryptjs';
 
-@Table
-export class User extends Model<User> {
+class User extends Model<User> {
   @Column
   name: string;
   @Column
   email: string;
-  @Column(DataType.VIRTUAL)
+  @Column(type: VIRTUAL)
   password: string;
   @Column
   password_hash: string;
@@ -32,9 +31,11 @@ export class User extends Model<User> {
     }
   }
 
+  /*
   static checkPassword(password: string, instance: User) {
     return bcrypt.compare(instance.password, instance.password_hash);
   }
+  */
 }
 
 export default User;
